@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Direct Message</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="message">Message</string>
+    <string name="send">Send</string>
+    <string name="logo">logo</string>
+</resources>
