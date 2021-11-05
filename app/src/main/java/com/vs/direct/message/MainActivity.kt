@@ -6,29 +6,24 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.hbb20.CountryCodePicker
-import com.mopub.common.MoPub
-import com.mopub.common.SdkConfiguration
-import com.mopub.common.SdkInitializationListener
-import com.mopub.common.logging.MoPubLog
-import com.mopub.mobileads.MoPubView
-
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var moPubView: MoPubView
-    private val adID = ""
+    private lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        moPubView = findViewById(R.id.mopub)
-        moPubView.setAdUnitId(adID)
-        val configBuilder = SdkConfiguration.Builder(adID)
+        MobileAds.initialize(this) {}
 
-        configBuilder.withLogLevel(MoPubLog.LogLevel.INFO)
-        MoPub.initializeSdk(this, configBuilder.build(), initSdkListener())
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         val sentBtn = findViewById<Button>(R.id.send)
         val countryCodePicker = findViewById<CountryCodePicker>(R.id.countryCodePicker)
@@ -47,12 +42,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 number.error = "Enter a valid mobile number"
             }
-        }
-    }
-
-    private fun initSdkListener(): SdkInitializationListener {
-        return SdkInitializationListener {
-            moPubView.loadAd()
         }
     }
 }
